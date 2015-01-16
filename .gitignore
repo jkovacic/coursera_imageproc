@@ -1,0 +1,5 @@
+# image files in various formats
+*.pgm
+
+# backup files
+*~

@@ -33,7 +33,7 @@ img = zeros(rows, cols);
 % Number of complete nxn squares per rows (Nr) and columns (Nc)
 % Number of remaining pixels per rows (Rr) and columns (Rc)
 Nr = floor(rows / n);
-Rr = rem(rows, n);
+Rr = mod(rows, n);
 Nc = floor(cols / n);
 Rc = mod(cols, n);
 

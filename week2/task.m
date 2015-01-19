@@ -75,6 +75,35 @@ figure(5);
 imshow(im4);
 
 
+rep = input('Press any key to continue...', 's');
+close all;
+
+% Predicton methods:
+
+disp('Figure 1: Prediction from pixel''s left neighbour:');
+E = pred_error(img, 0);
+eh = err_hist(E);
+figure(1);
+bar(eh(1,:), eh(2,:));
+H = err_entropy(eh);
+fprintf('Entropy: %f\n\n', H);
+
+disp('Figure 2: Prediction from pixel''s right neighbour:');
+E = pred_error(img, 1);
+eh = err_hist(E);
+figure(2);
+bar(eh(1,:), eh(2,:));
+H = err_entropy(eh);
+fprintf('Entropy: %f\n\n', H);
+
+disp('Figure 3: Prediction from pixel''s 3 neighbours:');
+E = pred_error(img, 2);
+eh = err_hist(E);
+figure(3);
+bar(eh(1,:), eh(2,:));
+H = err_entropy(eh);
+fprintf('Entropy: %f\n\n', H);
+
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
 
 close all; clear all;

@@ -42,7 +42,7 @@ for r = 1 : NR
         
         if ( method == 0)
             % use the quantization matrix Qm:
-            Q( (1+N*(r-1)) : (N*r), (1+N*(c-1)) : (N*c) )  = floor( subm ./ Qm ) .* Qm;
+            Q( (1+N*(r-1)) : (N*r), (1+N*(c-1)) : (N*c) )  = round( subm ./ Qm ) .* Qm;
             
         elseif ( method == 1)
             % Quantize by threshold:
@@ -52,7 +52,7 @@ for r = 1 : NR
                 error('Invalid theshold');
             end  % if
             
-            Q( (1+N*(r-1)) : (N*r), (1+N*(c-1)) : (N*c) ) = floor(subm / threshold) * threshold; 
+            Q( (1+N*(r-1)) : (N*r), (1+N*(c-1)) : (N*c) ) = round(subm / threshold) * threshold; 
             
         elseif (method == 2 )
             % Preserve 8 largest coefficients (by absolute value)

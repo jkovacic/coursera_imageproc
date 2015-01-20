@@ -1,5 +1,6 @@
 # image files in various formats
 *.pgm
+*.tiff
 
 # backup files
 *~

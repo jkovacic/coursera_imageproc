@@ -78,6 +78,29 @@ imshow(im4);
 rep = input('Press any key to continue...', 's');
 close all;
 
+% Compression of a color image:
+colimg = imread('../lena512color.tiff');
+
+disp('Figure 1: the original color image');
+figure(1);
+imshow(colimg);
+
+rgb1 = img_color_compress(colimg, 8, 8);
+disp('Figure 2: color image comprassed with quantization threshold of 8 for all channels');
+figure(2);
+imshow(rgb1);
+
+rgb2 = img_color_compress(colimg, 8, 64);
+disp('Figure 3: color image compressed with quantization threshold of 8 for the Y channel');
+disp('          and 64 for both chrominance channels')
+figure(3);
+imshow(rgb2);
+
+
+rep = input('Press any key to continue...', 's');
+close all;
+
+
 % Predicton methods:
 
 disp('Figure 1: Prediction from pixel''s left neighbour:');

@@ -11,7 +11,7 @@ figure(1);
 imshow(img);
 
 
-%DCT transform:
+% DCT transform:
 timg = img_transform(img, 1);
 
 % Quantizations:
@@ -27,11 +27,18 @@ q3 = img_quantize(timg, 1, 16);
 % - preserved 8 largest coefficients:
 q4 = img_quantize(timg, 2, 0);
 
+% FFT transform:
+fimg = img_transform(img, 2);
+
+% Quantization of FFT transform using the quantization matrix:
+q5 = img_quantize(fimg, 1, 128);
+
 % Inverse transforms of all  quantizations:
 im1 = img_inv_transform(q1, 0);
 im2 = img_inv_transform(q2, 1);
 im3 = img_inv_transform(q3, 0);
 im4 = img_inv_transform(q4, 1);
+im5 = img_inv_transform(q5, 2);
 
 % Display all compressed images:
 disp('Figure 2: compressed using the quantization matrix:');
@@ -48,10 +55,16 @@ imshow(im3);
 
 disp('Figure 5: compressed by preserving 8 largest DCT coefficients:');
 figure(5);
-imshow(im3);
+imshow(im4);
+
+disp('Figure 6: Fourier transformed image, compressed using the threshold 128:');
+figure(6);
+imshow(im5);
+
 
 rep = input('Press any key to continue...', 's');
-close(figure(2));  close(figure(3));  close(figure(4));  close(figure(5));
+close(figure(2));  close(figure(3));  
+close(figure(4));  close(figure(5));  close(figure(6));
 
 % Apply quantization on the original image
 im1 = img_quantize(img, 0, 0);

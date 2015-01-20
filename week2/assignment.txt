@@ -1,3 +1,4 @@
+
 * Do a basic implementation of JPEG.
   - Divide the image into non-overlapping 8x8 blocks.
   - Compute the DCT (discrete cosine transform) of each block. This is 

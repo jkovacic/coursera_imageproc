@@ -12,7 +12,7 @@ function [ H ] = err_entropy( eh )
 % Sum of all occurrences...
 s = sum(eh(2, :));
 % ... to obtain relative frequencies:
-p = eh(2, :) / s;
+p = double(eh(2, :)) / double(s);
 
 % A logarithm will be applied on relative frequencies. As a logarithm of 0
 % is not defined, all occurrences of 0 in 'p' will be replaced by 1

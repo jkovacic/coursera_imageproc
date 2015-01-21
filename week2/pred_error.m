@@ -16,7 +16,7 @@ function [ E ] = pred_error( image, method )
 [rows, cols] = size(image);
 
 % Preallocate E
-E = zeros(rows, cols);
+E = int16(zeros(rows, cols));
 
 % For each pixel,...
 for x = 1 : rows
@@ -66,7 +66,7 @@ for x = 1 : rows
         end  % if method
      
         % error = prediction - actual value:
-        E(x, y) = p - image(x, y);
+        E(x, y) = int16(p) - int16(image(x, y));
         
     end  % for y
 end  % for x

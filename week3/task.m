@@ -52,6 +52,30 @@ figure(2);
 imshow(nimg);
 fprintf('Max. absolute error: %d\n', max(max(e)));
 
+rep = input('Press any key to continue...', 's');
+close(figure(2));
+
+
+% Deblurring (sharpening) the image:
+shimg = img_unsharp_mask(img);
+disp('Figure 2: sharpened image using the Laplacian operator');
+figure(2);
+imshow(shimg);
+
+rep = input('Press any key to continue...', 's');
+close all;
+
+
+% Deblurring (sharpening) a color image:
+cimg = imread('../lena512color.tiff');
+disp('Figure 1: the original color image');
+figure(1);
+imshow(cimg);
+
+shcimg = img_unsharp_mask_color(cimg);
+disp('Figure 2: sharpened color image using the Laplacian operator');
+figure(2);
+imshow(shcimg);
 
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
 close all; clear all;

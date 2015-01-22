@@ -13,7 +13,7 @@ function [ H ] = img_hist( img )
 L = 256;
 
 % Preallocate H
-H = uint16(zeros(2, L));
+H = uint32(zeros(2, L));
 H(1, :) = 0 : (L-1);
 
 

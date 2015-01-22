@@ -9,6 +9,22 @@ disp('Figure 1: the original image')
 figure(1);
 imshow(img);
 
+
+% Equalization of histogram
+heq = img_hist_eq(img);
+disp('Figure 2: the image with equalized histogram');
+figure(2);
+imshow(heq);
+
+heqbi = histeq(img, 256);
+disp('Figure 3: the image with equalized histogram (built-in implementation)');
+figure(3);
+imshow(heqbi);
+
+rep = input('Press any key to continue...', 's');
+close(figure(2));  close(figure(3));
+
+
 % Median filtering of noised images:
 nimg = img_noise(img, 12);
 disp('Figure 2: Image with gaussian noise added (s=12)');

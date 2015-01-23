@@ -78,4 +78,5 @@ figure(2);
 imshow(shcimg);
 
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
+disp('Histogram equalization on videos is implemented separately in ''video_hist_eq''.');
 close all; clear all;

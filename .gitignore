@@ -1,6 +1,19 @@
 # image files in various formats
 *.pgm
+*.ppm
 *.tiff
+*.jpeg
+*.gif
+*.avi
+
+
+# video files in various formats:
+*.ogg
+*.mp4
+*.mov
+*.avi
+*.webm
+
 
 # backup files
 *~

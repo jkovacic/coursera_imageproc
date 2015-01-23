@@ -1,9 +1,8 @@
 clear all;   close all;
 
-% The video clip taken from
-% https://commons.wikimedia.org/wiki/File:Ap16_rover.ogg
-% and further process to reduce its size and length:
-vobj = VideoReader('../rover.webm');
+% The video clip is downloaded from:
+% https://commons.wikimedia.org/wiki/File:-Adrenergic-Inhibition-of-Contractility-in-L6-Skeletal-Muscle-Cells-pone.0022304.s001.ogv
+vobj = VideoReader('../Adrenergic-Inhibition-of-Contractility-in-L6-Skeletal-Muscle-Cells-pone.0022304.s001.ogv');
 
 nFrames = vobj.NumberOfFrames;
 vidHeight = vobj.Height;
@@ -18,8 +17,8 @@ vidWidth = vobj.Width;
 mov(1:nFrames) = struct('cdata', zeros(vidHeight, vidWidth, 3, 'uint8'), 'colormap', []);
 
 % Read one frame at a time.
-for i = 1 : nFrames
-    frame = read(vobj, i);
+for f = 1 : nFrames
+    frame = read(vobj, f);
 
     % Apply histogramequalization on ech frame's channel:
     for ch = 1 : 3
@@ -28,8 +27,8 @@ for i = 1 : nFrames
     end  % for ch
 
     % And append the frame to the movie
-    mov(i).cdata = frame;
-end  % for i
+    mov(f).cdata = frame;
+end  % for f
 
 % Save the movie as an AVI file
 movie2avi(mov, 'single_histeq.avi', 'FPS', vobj.FrameRate);
@@ -59,7 +58,7 @@ for ch = 1 : 3
 end  % for ch
 
 
-% Preallocate the movie structure.
+% Reset the movie structure.
 mov(1:nFrames) = struct('cdata', zeros(vidHeight, vidWidth, 3, 'uint8'), 'colormap', []);
 
 % The appropriate parts of the large image are copied into the movie
@@ -72,3 +71,6 @@ end  % for f
 movie2avi(mov, 'group_histeq.avi', 'FPS', vobj.FrameRate);
 disp('All frames'' histogram has been equalized and the movie has been');
 disp('saved to ''group_hist_eq.avi''');
+
+rep = input('Press any key to close all figures, clear all variables and finish...', 's');
+close all; clear all;

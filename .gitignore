@@ -8,8 +8,8 @@
 
 
 # video files in various formats:
-*.ogg
-*.mp4
+*.og?
+*.mp*
 *.mov
 *.avi
 *.webm

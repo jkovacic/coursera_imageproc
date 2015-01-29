@@ -57,7 +57,7 @@ rep = input('Press any key to continue...', 's');
 % figure counter
 i = 3;
 for n = [3, 5, 10];
-    fprintf('Figure %d\n: apply median filter of size %dx%d', i, n, n);
+    fprintf('Figure %d: apply median filter of size %dx%d\n', i, n, n);
     figure(i);
     subplot(2, 4, 1);
     imshow(medfilt2(ng1, [n, n]));

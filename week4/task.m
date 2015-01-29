@@ -79,5 +79,28 @@ for n = [3, 5, 10];
     i = i + 1;
 end  % for
 
+rep = input('Press any key to continue...', 's');
+close(figure(2));  close(figure(3));  close(figure(4));  close(figure(5));
+
+
+% Wiener filtering (deconvolution)
+[ nimg, H] = img_gauss_blur(img, 13, 5);
+
+figure(2);
+disp('Figure 2: blurred image');
+imshow(nimg);
+
+figure(3);
+disp('Figure 3: Wiener deconvolution using various constants');
+
+for i = 1 : 10
+    k = i / 20;
+    rimg = img_wiener_deconv(nimg, H, k);
+    subplot(2, 5, i);
+    imshow(rimg);
+    title(sprintf('K=%f', k));
+end  % for i
+
+
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
 close all; clear all;

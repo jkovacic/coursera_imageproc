@@ -26,8 +26,9 @@
   so register the other N-1 to it), and then average them. Observe if you
   manage to estimate the correct rotation angles and if you manage to
   reduce the noise. Note: Registration means that you are aligning the image
-  again, see for example
-  http://www.mathworks.com/help/images/ref/imregister.html or http://en.wikipedia.org/wiki/Image_registration
+  again, see for example 
+  http://www.mathworks.com/help/images/ref/imregister.html or 
+  http://en.wikipedia.org/wiki/Image_registration
 
 * Apply JPEG compression to an image, with high levels of compression such
   that the artifacts are noticeable. Can you apply any of the techniques

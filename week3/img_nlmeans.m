@@ -1,11 +1,10 @@
-function [ fimg ] = img_nlmeans( img, r, f, sigma, h )
+function [ fimg ] = img_nlmeans( img, r, f, h )
 %IMG_NLMEANS Non-local means denoising of an image
 %
 % Input:
 %   img   - a matix of noisy image's pixels
-%   r     - size of ht research neighbourhood
+%   r     - size of the research neighbourhood
 %   f     - size of the comparison window
-%   sigma - standard deviation of the noise
 %   h     - degree of filtering
 %
 % Return:
@@ -15,15 +14,16 @@ function [ fimg ] = img_nlmeans( img, r, f, sigma, h )
 % The algorithm is described in detail at:
 % http://www.ipol.im/pub/art/2011/bcm_nlm/
 
-O = double( img );
+
+% img(x, y) == Om(x+f, y+f)
+Om = padarray( double( img ), [f, f], 'symmetric' );
 [rows, cols ] = size(img);
 
-% Prallocate 'fimg'
+% Preallocate 'fimg'
 fimg = zeros(rows, cols);
 
 h2 = h * h;
 f2 = (2*f+1);  f2 = f2*f2;
-sigma2 = 2*sigma * sigma;
 
 for x = 1 : rows
     for y = 1:cols
@@ -35,56 +35,22 @@ for x = 1 : rows
         rx2 = min( x+r, rows );
         ry1 = max( y-r, 1 );
         ry2 = min( y+r, cols );
+        
+        % fxf neighbourhood around p (x,y):
+        W1 = Om( (x) : (x+2*f), (y) : (y+2*f) );
+
         for rx = rx1: rx2
             for ry = ry1 : ry2
-                % Obtain d2:
-                d2 = 0;
-                for fx = -f : f 
-                    for fy = -f : f
-                        % Comparison window of the current pixel
-                        p = [ x+fx, y+fy ];
-                        % Comparison window of pixel within the research window
-                        q = [ rx+fx, ry+fy ];
-                        
-                        % If any pixel of any comparison window reaches out
-                        % of img's range, fill those pixels with img
-                        % mirrored around the corresponding edge
-                        % (padarray(img, ...., 'symmetric'))
-                        
-                        if ( p(1) < 1 )
-                            p(1) = 1 - p(1);
-                        elseif ( p(1) > rows )
-                            p(1) = 2 * rows - p(1) + 1;
-                        end
-                        
-                        if ( p(2) < 1 )
-                            p(2) = 1 - p(2);
-                        elseif ( p(2) > cols )
-                            p(2) = 2 * cols - p(2) + 1;
-                        end
-                        
-                        if ( q(1) < 1 )
-                            q(1) = 1 - q(1);
-                        elseif ( q(1) > rows )
-                            q(1) = 2 * rows - q(1) + 1;
-                        end
-                        
-                        if ( q(2) < 1 )
-                            q(2) = 1 - q(2);
-                        elseif ( q(2) > cols )
-                            q(2) = 2 * cols - q(2) + 1;
-                        end
-                        
-                        du = O( p(1), p(2) ) - O(q(1), q(2) );
-                        d2 = d2 + du*du;
-                    end  % for fy
-                end  % for fx
+                % fxf neighbourhood around q (rx, ry):
+                W2 = Om((rx) : (rx+2*f), (ry) : (ry+2*f) );
                 
-                d2 = d2 / f2;
+                % d2 = sum of squared differences of both fxf neighbourhoods
+                du = W2 - W1;
+                d2 = sum(sum( du .* du )) / f2;
                 
-                w = exp(-max(d2-sigma2, 0) / h2);
+                w = exp(-d2 / h2);
                 Cp = Cp + w;
-                up = up + O(rx, ry) * w;
+                up = up + Om(rx+f, ry+f) * w;
                 
             end  % for ry
         end  % for rx

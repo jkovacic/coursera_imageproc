@@ -12,23 +12,24 @@ function [ fimg ] = img_nlmeans( img, r, f, h )
 
 
 % The algorithm is described in detail at:
-% http://www.ipol.im/pub/art/2011/bcm_nlm/
+% https://en.wikipedia.org/wiki/Non-local_means
+% See also: http://www.ipol.im/pub/art/2011/bcm_nlm/
 
+nf = 2 * f + 1;
+f2 = nf * nf;
 
-% img(x, y) == Om(x+f, y+f)
-Om = padarray( double( img ), [f, f], 'symmetric' );
+% Local means of each pixel:
+Om = conv2( double(img), ones(nf, nf)/f2, 'same' );
+
 [rows, cols ] = size(img);
 
 % Preallocate 'fimg'
 fimg = zeros(rows, cols);
 
 h2 = h * h;
-f2 = (2*f+1);  f2 = f2*f2;
 
 for x = 1 : rows
     for y = 1:cols
-        Cp = 0;
-        up = 0;
         
         % Ensure that pixel's rxr neighbourhood will not reach out of img's range
         rx1 = max( x-r, 1 );
@@ -36,26 +37,19 @@ for x = 1 : rows
         ry1 = max( y-r, 1 );
         ry2 = min( y+r, cols );
         
-        % fxf neighbourhood around p (x,y):
-        W1 = Om( (x) : (x+2*f), (y) : (y+2*f) );
-
-        for rx = rx1: rx2
-            for ry = ry1 : ry2
-                % fxf neighbourhood around q (rx, ry):
-                W2 = Om((rx) : (rx+2*f), (ry) : (ry+2*f) );
-                
-                % d2 = sum of squared differences of both fxf neighbourhoods
-                du = W2 - W1;
-                d2 = sum(sum( du .* du )) / f2;
-                
-                w = exp(-d2 / h2);
-                Cp = Cp + w;
-                up = up + Om(rx+f, ry+f) * w;
-                
-            end  % for ry
-        end  % for rx
+        % Subtract current pixel's local mean from local means of all
+        % pixels within the research neighbourhood:
+        R = Om( rx1 : rx2, ry1 : ry2 ) - Om(x, y);
         
-        fimg(x, y) = up / Cp;
+        % And obtain "weights" to all pixels within the research neighbourhood
+        w = exp( -(R .* R) / h2 );
+        
+        % Calculate the weighted sum of all pixels
+        up = sum(sum( double(img(rx1 : rx2, ry1 : ry2)) .* w ));
+        
+        % and finaly normalize it
+        fimg(x, y) = up / sum(sum(w));
+
     end  % for y
 end  % for x
 

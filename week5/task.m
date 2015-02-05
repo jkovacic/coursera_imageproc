@@ -19,5 +19,24 @@ figure(2);
 disp('Figure 2: the original image with detected circles in gray');
 imshow(nimg);
 
+rep = input('Press any key to continue...', 's');
+close all;  clear all;
+
+
+% Image downladed (as .png) from:
+% https://commons.wikimedia.org/wiki/File:Ru_ball.svg
+img =  imresize(edge(rgb2gray(imread('../200px-Ru_ball.svg.png')), 'sobel'), 0.5);
+
+disp('Figure 1: the original image with detected edges');
+figure(1);
+imshow(img);
+
+[pe, qe, ae, be, thetae] = img_hough_ellipse(img, 20, 35);
+nimg = img_draw_ellipses(img, pe, qe, ae, be, thetae);
+disp('Figure 2: the original image with detectedellipses in gray');
+figure(2);
+imshow(nimg);
+
+
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
 close all; clear all;

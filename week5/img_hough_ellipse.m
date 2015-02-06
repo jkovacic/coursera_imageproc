@@ -123,6 +123,9 @@ for i1 = 1 : (length(x)-1)
         b = [ b ; bmax ];
         theta = [ theta ; alpha ];
         
+        % TODO collect "similar" ellipses and "join" them into the best
+        % fitting one
+        
     end  % for i2
 end  % for i1
             

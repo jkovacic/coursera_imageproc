@@ -3,7 +3,7 @@ function [ p, q, a, b, theta ] = img_hough_ellipse( img, minr, minvotes )
 %                  possible ellipses
 % Input:
 %   img      - a matrix of original (binary!!!) image's pixels
-%   minr     - minimum minor or major radiusto be considered
+%   minr     - minimum minor or major radius to be considered
 %   minvotes - minimum number of votes for the minor radius to be
 %              considered
 %
@@ -21,7 +21,7 @@ function [ p, q, a, b, theta ] = img_hough_ellipse( img, minr, minvotes )
 % relative to x), making the algorithm very inefficient. Instead a memory
 % efficient algorithm is implemented, described in detail at:
 %
-%   Yonghong Xie, Quiang Ji,
+%   Yonghong Xie, Qiang Ji,
 %   A New Efficient Ellipse Detection Method
 %   Proceedings of the 16th International Conference on Pattern Recognition - ICPR, 
 %   vol. 2, pp. 957-960, 2002

@@ -82,7 +82,7 @@ hold off
 
 disp('Figure 5: binary image with the threshold applied');
 figure(5);
-imshow( im2bw(nimg, th/255) );
+imshow( nimg>th );
 
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
 close all; clear all;

@@ -84,5 +84,27 @@ disp('Figure 5: binary image with the threshold applied');
 figure(5);
 imshow( nimg>th );
 
+
+rep = input('Press any key to continue...', 's');
+close all;  clear all;
+
+
+% Segmentation by region growing:
+
+% Test image downloaded from:
+% https://en.wikipedia.org/wiki/File:Regiongrowing_figure_Original.jpg
+img = imread('../Regiongrowing_figure_Original.jpg');
+
+disp('Figure 1: the original image');
+figure(1);
+imshow(img);
+
+seeds=[78, 75, 55, 127, 143, 131, 132, 264; 230, 242, 205, 267, 267, 324, 332, 265 ];
+bwimg = img_region_grow(img, seeds);
+disp('Figure 2: image, segmented using the image growing method');
+figure(2);
+imshow(bwimg);
+
+
 rep = input('Press any key to close all figures, clear all variables and finish...', 's');
 close all; clear all;

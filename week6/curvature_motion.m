@@ -156,8 +156,13 @@ for i = 1 : N
             
             
             % Finally update the 'phi' using the Euler's method.
-            phi(x, y) = phi(x, y) + dt * v * ...
-                (uxx * uy + uyy * ux - 2 * ux * uy * uxy) / (ux*ux + uy*uy);
+            
+            % Note: If both first order derivatives equal 0, the pixel
+            % would not be updated anyway.
+            if ( abs(ux)>eps || abs(uy)>eps )
+                phi(x, y) = phi(x, y) + dt * v * ...
+                    (uxx * uy + uyy * ux - 2 * ux * uy * uxy) / (ux*ux + uy*uy);
+            end  % if
 
         end  % for y
     end  % for x

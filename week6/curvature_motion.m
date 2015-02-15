@@ -85,9 +85,9 @@ for i = 1 : N
             % rewritten as
             %
             %
-            %    d phi         phi_xx*phi_y + phi_yy*phi_x - 2*phi_x*phi_y*phi_xy
-            %   ------- = v * ----------------------------------------------------    ( 3 )
-            %     dt                         phi_x ^ 2 + phi_y ^ 2
+            %    d phi         phi_xx*phi_y^2 + phi_yy*phi_x^2 - 2*phi_x*phi_y*phi_xy
+            %   ------- = v * --------------------------------------------------------    ( 3 )
+            %     dt                           phi_x ^ 2 + phi_y ^ 2
             %
             % where phi_x, phi_yy, phi_xx, phi_yy and phi_xy denote
             % 1st or 2nd order partial derivatives of phi w.r.t.
@@ -161,7 +161,7 @@ for i = 1 : N
             % would not be updated anyway.
             if ( abs(ux)>eps || abs(uy)>eps )
                 phi(x, y) = phi(x, y) + dt * v * ...
-                    (uxx * uy + uyy * ux - 2 * ux * uy * uxy) / (ux*ux + uy*uy);
+                    (uxx * uy * uy + uyy * ux * ux - 2 * ux * uy * uxy) / (ux*ux + uy*uy);
             end  % if
 
         end  % for y
